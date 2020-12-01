@@ -14,9 +14,9 @@ app = Flask(__name__)
 ROOT_PATH = os.getcwd()
 
 
-model = tf.keras.models.load_model(f"{ROOT_PATH}/myapp/model")
+model = tf.keras.models.load_model(f"{ROOT_PATH}/app/model")
 
-with open(os.path.join(ROOT_PATH, f"{ROOT_PATH}/myapp/model/model.bin"), "rb") as f:
+with open(os.path.join(ROOT_PATH, f"{ROOT_PATH}/app/model/model.bin"), "rb") as f:
     (tokenizer,) = pickle.load(f)
 
 

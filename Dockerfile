@@ -6,6 +6,6 @@ COPY requirements.txt .
 
 RUN pip install -r requirements.txt
 
-COPY myapp myapp
+COPY app app
 
-CMD ["python", "-u", "/app/myapp/app.py"]
+CMD ["python", "-u", "/app/app/app.py"]

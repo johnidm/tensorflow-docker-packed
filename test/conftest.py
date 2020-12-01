@@ -1,6 +1,6 @@
 import pytest
 
-from myapp.app import app
+from app.app import app
 
 
 @pytest.fixture
