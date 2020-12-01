@@ -1,0 +1,8 @@
+-r requirements.txt
+
+jupyterlab
+pytest
+
+pandas
+numpy
+matplotlib
