@@ -4,8 +4,8 @@ WORKDIR /app
 
 COPY requirements.txt .
 
-RUN pip install -r requirements.txt
+RUN pip install -r requirements.txt --use-feature=2020-resolver
 
 COPY app app
 
-CMD ["python", "-u", "/app/app/app.py"]
+CMD ["python", "-u", "/app/app/main.py"]
