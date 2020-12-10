@@ -9,7 +9,7 @@ jupyter-notebook:
 
 docker-run:
 	docker build  -t ${DOCKER_IMAGE_NAME}:master .
-	docker run  -p 5000:5000 ${DOCKER_IMAGE_NAME}:master
+	docker run  -p 8000:8000 ${DOCKER_IMAGE_NAME}:master
 
 test-run:
 	pytest

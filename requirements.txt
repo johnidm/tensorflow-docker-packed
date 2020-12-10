@@ -1,4 +1,5 @@
 numpy
 tensorflow
-flask
+fastapi
+uvicorn
 stopwordsiso
