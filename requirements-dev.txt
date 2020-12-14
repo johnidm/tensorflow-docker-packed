@@ -2,7 +2,8 @@
 
 jupyterlab
 pytest
-
+beautifulsoup4
+requests
 pandas
 numpy
 matplotlib
