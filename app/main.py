@@ -8,17 +8,12 @@ import uvicorn
 from pydantic import BaseModel
 import os
 
-from tensorflow.keras.preprocessing.sequence import pad_sequences
-
 app = fastapi.FastAPI()
 
 ROOT_PATH = os.getcwd()
 
 
 model = tf.keras.models.load_model(f"{ROOT_PATH}/app/model")
-
-with open(os.path.join(ROOT_PATH, f"{ROOT_PATH}/app/model/model.bin"), "rb") as f:
-    (tokenizer,) = pickle.load(f)
 
 
 class DoIn(BaseModel):
@@ -27,7 +22,8 @@ class DoIn(BaseModel):
 
 class DoOut(BaseModel):
     text: str
-    targets: Dict[str, float]
+    label: str
+    score: float
 
 
 class HomeOut(BaseModel):
@@ -49,21 +45,29 @@ def get_home():
 
 @app.post("/do", status_code=fastapi.status.HTTP_201_CREATED, response_model=DoOut)
 def do_post(do: DoIn):
+
+    class_names = [
+        "ciencia e tecnologia",
+        "economia",
+        "entretenimento",
+        "esportes",
+        "politica",
+    ]
+
     text = do.text
 
-    padded_text = pad_sequences(
-        tokenizer.texts_to_sequences([text]), maxlen=250, truncating="post"
-    )
+    predicts = model.predict([text])
 
-    predict = model.predict(padded_text)
+    predicted_scores = tf.keras.backend.flatten(predicts)
+    predicted_index = tf.argmax(predicted_scores, axis=0)
 
-    targets = {}
-    for index, ele in enumerate(predict[0]):
-        targets[str(index)] = str(round(ele, 2))
+    predicted_label = class_names[predicted_index]
+    predicted_score = predicted_scores[predicted_index]
 
     return {
         "text": text,
-        "targets": targets,
+        "label": predicted_label,
+        "score": predicted_score,
     }
 
 
